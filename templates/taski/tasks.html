@@ -1,0 +1,56 @@
+{% extends '../base.html' %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h1>Tareas - {{title}}</h1>
+            {% if message %}
+                <h3>Mensaje: {{message}}</h3>
+            {% elif error %}
+                <h3>error: {{error}}</h3>
+            {% endif %}
+
+            <a class="btn btn-info" href="{% url 'taskapp:create' %}">Crear Tarea ➕</a>
+
+            <a class="btn btn-success" href="{% url 'taskapp:completed' %}">Tareas completadas</a>
+            <a class="btn btn-warning" href="{% url 'taskapp:tasks' %}">Tareas no completadas</a>
+
+
+            {% for task in tasks %}
+                <a href="{% url 'taskapp:detail' task.id %}" class="btn btn-sm ">
+                    {% if task.important %}
+                        <div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+
+                            <div class="card-header">
+                                <h2> {{task.name}} by <span>{{task.owner}}</span></h2>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">{{task.description}}</p>
+                            </div>
+    
+                            <div class="card-footer">
+                                <p>{{task.datecompleted|date:'M j Y:i'}}</p>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+
+                            <div class="card-header">
+                                <h2> {{task.name}} by <span>{{task.owner}}</span></h2>
+                            </div>
+                            <div class="card-body">
+                                <p class="card-text">{{task.description}}</p>
+                            </div>
+    
+                            <div class="card-footer">
+                                <p>{{task.datecompleted|date:'M j Y:i'}}</p>
+                            </div>
+                        </div>
+                    {% endif %}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}

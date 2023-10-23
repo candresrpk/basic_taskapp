@@ -1,0 +1,30 @@
+{% extends '../base.html' %}
+
+
+{% block content %}
+    <h3>Edit task</h3>
+
+    {% if message %}
+        <h3>Mensaje: {{message}}</h3>
+    {% elif error %}
+        <h3>error: {{error}}</h3>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+
+        <button>Update</button>
+    </form>
+
+    <form action="{% url 'taskapp:complete' task.id %}" method="POST">
+        {% csrf_token %}
+        <button>Complete</button>
+    </form>
+
+    <form action="{% url 'taskapp:delete' task.id %}" method="POST">
+        {% csrf_token %}
+        <button>delete</button>
+    </form>
+
+{% endblock %}
